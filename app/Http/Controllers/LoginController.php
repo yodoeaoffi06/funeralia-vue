@@ -16,22 +16,39 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
-        if ($token = Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
 
-            return response()->json(['token' => $token], 200);
+            $usuario = usuario::where('email', '=', $request->input('email'))
+                ->first();
+
+            switch($usuario->id_tipo) {
+                case 1:
+                    return response()->json(['message' => 'Se Logeo un gerente exitoso'], 200);
+                    break;
+                case 2:
+                    return response()->json(['message' => 'Se Logeo un secretaria exitoso'], 200);
+                    break;
+                case 3:
+                    return redirect()->to();
+                    break;
+            }
         } else {
 
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+            return redirect()->to();
         }
     }
 
     //Función para salir de la sesión
-    public function logout(Request $request)
+    public function logout()
     {
         try {
-            auth()->logout();
+
+            Auth::logout();
 
             return response()->json(['message' => 'Logout exitoso'], 200);
         } catch (Exception $e) {

@@ -40,4 +40,9 @@ Route::prefix('f')->group(function () {
         Route::get('get-services', 'App\Http\Controllers\ServicesController@getServices');
         Route::get('service-info/{id_servicio}', 'App\Http\Controllers\ServicesController@getServiceInformation');
     })->middleware('auth:api');
+
+    Route::prefix('assignment')->group(function () {
+        Route::post('assign-service', 'App\Http\Controllers\ServicesAssignmentController@assignService');
+        Route::get('today-services', 'App\Http\Controllers\ServicesAssignmentController@getTodayServices');
+    })->middleware('auth:api');
 });

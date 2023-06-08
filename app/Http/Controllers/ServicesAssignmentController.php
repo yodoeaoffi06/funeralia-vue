@@ -20,8 +20,8 @@ class ServicesAssignmentController extends Controller
         try {
 
             $rules = [
-                'id_servicio'    => 'required|string',
-                'id_trabajador'  => 'required|string',
+                'id_servicio'    => 'required|int',
+                'id_trabajador'  => 'required|int',
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -114,12 +114,9 @@ class ServicesAssignmentController extends Controller
 
         try {
 
-            $hoy = Carbon::now()->toDateString();
+            $hoy = Carbon::now()->format('Y-m-d');
 
-            $servicios = servicio::join('cliente AS a', 'a.id_cliente', '=', 'servicio.id_cliente')
-                ->join('tipo_servicio AS b', 'b.id_tipo_servicio', '=', 'servicio.id_tipo_servicio')
-                ->join('asignacion AS c', 'c.id_servicio', '=', 'servicio.id_servicio')
-                ->select(
+            $servicios = servicio::select(
                     'servicio.id_servicio',
                     'b.tipo AS tipo_servicio',
                     'a.nombre AS nombre_cliente',
@@ -128,24 +125,24 @@ class ServicesAssignmentController extends Controller
                     'fecha_entrega',
                     'fecha_recogida',
                     'c.id_asignacion'
-                )->where(function ($query) use ($hoy) {
-                    $query->where('fecha_entrega', $hoy)
-                        ->orWhere('fecha_recogida', $hoy);
-                })
+                )->join('cliente AS a', 'a.id_cliente', '=', 'servicio.id_cliente')
+                ->join('tipo_servicio AS b', 'b.id_tipo_servicio', '=', 'servicio.id_tipo_servicio')
+                ->join('asignacion AS c', 'c.id_servicio', '=', 'servicio.id_servicio')
+                ->whereDate('servicio.fecha_entrega', $hoy)
+                ->orWhereDate('servicio.fecha_recogida', $hoy)
                 ->get();
 
-            if($servicios->isEmpty()) {
-
+            if ($servicios->isEmpty()) {
                 return response()->json([
-                    'data'      => $servicios,
-                    'message'   => 'Se han obtenido los servicios'
+                    'data' => $servicios,
+                    'message' => 'Se han obtenido los servicios'
                 ], 200);
             }
 
             return response()->json(['message' => 'No hay servicios para hoy'], 400);
-        } catch(Exception $e) {
-
-            return response()->json(['exeption' => $e], 400);
+        } catch (Exception $e) {
+            return response()->json(['exception' => $e->getMessage()], 400);
         }
     }
+
 }
