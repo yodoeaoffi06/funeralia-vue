@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 
-class usuario extends Model implements Authenticatable, JWTSubject
+class usuario extends Model implements Authenticatable
 {
     use HasFactory, HasApiTokens;
 
