@@ -12,6 +12,11 @@ use App\Models\usuario;
 
 class LoginController extends Controller
 {
+
+    public function show(){
+        return view('login');
+    }
+
     //Función para iniciar sesión
     public function login(Request $request)
     {
@@ -23,32 +28,37 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
 
+            
+
             $usuario = usuario::where('email', '=', $request->input('email'))
                 ->first();
 
             switch($usuario->id_tipo) {
                 case 1:
-                    return response()->json(['message' => 'Se Logeo un gerente exitoso'], 200);
+                    return redirect('principal')->with('message', 'Se ha logeado un gerente');
                     break;
                 case 2:
-                    return response()->json(['message' => 'Se Logeo un secretaria exitoso'], 200);
+                    return redirect('principal')->with('message', 'Se ha logeado una secretaria');
                     break;
                 case 3:
-                    return redirect()->to();
+                    return redirect('principal')->with('message', 'Se ha logeado un trabajador');
                     break;
             }
         } else {
 
-            return redirect()->to();
+            return redirect('login')->with('message', 'No se ha logeado');
         }
     }
 
     //Función para salir de la sesión
-    public function logout()
+    public function logout(Request $request)
     {
         try {
 
             Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
             return response()->json(['message' => 'Logout exitoso'], 200);
         } catch (Exception $e) {
