@@ -12,9 +12,154 @@
 
     </head>
     <body class="antialiased">
-        <div id = "login">
-
+        
+<template>
+  <div class="login-container">
+    <div class="image-container">
+      <!-- Aquí puedes ajustar la ruta de la imagen -->
+      <img :src="imagenURL" alt="Imagen de fondo" />
+    </div>
+    <div class="form-container">
+      <div class="logo-container">
+        <!-- Aquí puedes ajustar la ruta y el tamaño del logo -->
+        <img :src="logoURL" alt="Logo" class="logo" />
+      </div>
+      <h2 class="form-title">Iniciar sesión</h2>
+      <form>
+        <div class="form-group">
+          <label for="email">Correo electrónico:</label>
+          <input type="email" id="email" v-model="email" />
         </div>
-        @vite('resources/js/app.js')
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <input type="password" id="password" v-model="password" />
+        </div>
+        <button class="form-button" @click.prevent="login">Iniciar sesión</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+      imagenURL: "./assets/cementerio.png",
+      logoURL: "./assets/paloma.jpg"
+    };
+  },
+  methods: {
+    login() {
+      // Aquí puedes agregar la lógica de inicio de sesión
+      // Por ejemplo, puedes hacer una petición HTTP para autenticar al usuario
+      // y redirigirlo a la página principal.
+      // Este es solo un ejemplo de placeholder:
+      if (this.email && this.password) {
+        alert('Inicio de sesión exitoso');
+      } else {
+        alert('Por favor, ingresa un correo electrónico y una contraseña válida');
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative&display=swap');
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 100px; /* Ajusta el tamaño del logo según tus necesidades */
+  height: 100px; /* Ajusta el tamaño del logo según tus necesidades */
+}
+
+.form-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Cinzel Decorative', cursive;
+  color: #333;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+  font-family: 'Cinzel Decorative', cursive;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+input[type="email"],
+input[type="password"] {
+  width: 300px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'Cinzel Decorative', cursive;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+</style>
+
     </body>
 </html>
