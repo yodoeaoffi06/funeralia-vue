@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-06-2023 a las 02:07:33
+-- Tiempo de generación: 09-06-2023 a las 07:14:29
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -66,7 +66,14 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cliente`, `nombre`, `telefono`, `direccion`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Yadhir', '299685317', 'Calle real', '2023-06-06 15:28:18', '2023-06-06 15:28:18', NULL);
+(1, 'Yadhir', '299685317', 'Calle real', '2023-06-06 15:28:18', '2023-06-06 15:28:18', NULL),
+(2, 'Neida', '2851103581', 'Tlalixcoyan', '2023-06-09 00:54:09', '2023-06-09 00:54:09', NULL),
+(3, 'ahhh', '2854303581', 'Tlalixcoyan', '2023-06-09 02:05:57', '2023-06-09 02:05:57', NULL),
+(4, 'uno', '2731184975', 'ah', '2023-06-09 02:08:52', '2023-06-09 02:08:52', NULL),
+(5, 'nuevo', '2734584975', 'La noches', '2023-06-09 02:50:35', '2023-06-09 02:50:35', NULL),
+(6, 'nuevo', '2734584975', 'La noches', '2023-06-09 02:52:46', '2023-06-09 02:52:46', NULL),
+(7, 'aefg', '2255886677', 'La noches', '2023-06-09 03:25:01', '2023-06-09 03:25:01', NULL),
+(8, 'Charly', '2731184944', 'Buena Vista', '2023-06-09 05:05:56', '2023-06-09 05:05:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -143,7 +150,9 @@ CREATE TABLE `mobiliario_total` (
 --
 
 INSERT INTO `mobiliario_total` (`id_mobiliario_total`, `id_mobiliario`, `cantidad`, `id_servicio`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 18, 1, 4, '2023-06-06 17:14:49', '2023-06-06 17:14:49', NULL);
+(1, 18, 1, 4, '2023-06-06 17:14:49', '2023-06-06 17:14:49', NULL),
+(3, 18, 2, 5, '2023-06-09 05:03:21', '2023-06-09 05:03:21', NULL),
+(4, 14, 1, 8, '2023-06-09 05:07:18', '2023-06-09 05:07:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -188,7 +197,11 @@ CREATE TABLE `servicio` (
 --
 
 INSERT INTO `servicio` (`id_servicio`, `id_cliente`, `id_tipo_servicio`, `fecha_entrega`, `fecha_recogida`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(4, 1, 2, '2023-06-06', '2023-06-08', '2023-06-06 16:50:17', '2023-06-06 16:50:17', NULL);
+(4, 1, 2, '2023-06-06', '2023-06-08', '2023-06-06 16:50:17', '2023-06-06 16:50:17', NULL),
+(5, 7, 2, '2023-06-08', '2023-06-10', '2023-06-09 03:43:37', '2023-06-09 03:43:37', NULL),
+(6, 8, 1, '2023-06-08', '2023-06-10', '2023-06-09 05:06:06', '2023-06-09 05:06:06', NULL),
+(7, 8, 1, '2023-06-08', '2023-06-10', '2023-06-09 05:06:52', '2023-06-09 05:06:52', NULL),
+(8, 8, 1, '2023-06-08', '2023-06-10', '2023-06-09 05:07:06', '2023-06-09 05:07:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -326,8 +339,8 @@ ALTER TABLE `mobiliario`
 --
 ALTER TABLE `mobiliario_total`
   ADD PRIMARY KEY (`id_mobiliario_total`),
-  ADD UNIQUE KEY `FK_MOBILIARIO` (`id_mobiliario`),
-  ADD KEY `FK_SERVICIO` (`id_servicio`);
+  ADD KEY `FK_SERVICIO` (`id_servicio`),
+  ADD KEY `FK_MOBILIARIO` (`id_mobiliario`) USING BTREE;
 
 --
 -- Indices de la tabla `secretaria`
@@ -384,7 +397,7 @@ ALTER TABLE `asignacion`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del cliente', AUTO_INCREMENT=2;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del cliente', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `gerente`
@@ -402,7 +415,7 @@ ALTER TABLE `mobiliario`
 -- AUTO_INCREMENT de la tabla `mobiliario_total`
 --
 ALTER TABLE `mobiliario_total`
-  MODIFY `id_mobiliario_total` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del mobiliario total', AUTO_INCREMENT=2;
+  MODIFY `id_mobiliario_total` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del mobiliario total', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `secretaria`
@@ -414,7 +427,7 @@ ALTER TABLE `secretaria`
 -- AUTO_INCREMENT de la tabla `servicio`
 --
 ALTER TABLE `servicio`
-  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del servicio', AUTO_INCREMENT=5;
+  MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del servicio', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_servicio`
