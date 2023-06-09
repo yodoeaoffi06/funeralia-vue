@@ -12,18 +12,41 @@ use App\Models\usuario;
 
 class LoginController extends Controller
 {
+
+    public function show(){
+        return view('login');
+    }
+
     //Función para iniciar sesión
     public function login(Request $request)
     {
 
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
-        if ($token = Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
 
-            return response()->json(['token' => $token], 200);
+            
+
+            $usuario = usuario::where('email', '=', $request->input('email'))
+                ->first();
+
+            switch($usuario->id_tipo) {
+                case 1:
+                    return redirect('home')->with('message', 'Se ha logeado un gerente');
+                    break;
+                case 2:
+                    return redirect('home')->with('message', 'Se ha logeado una secretaria');
+                    break;
+                case 3:
+                    return redirect('principal')->with('message', 'Se ha logeado un trabajador');
+                    break;
+            }
         } else {
 
-            return response()->json(['error' => 'Credenciales inválidas'], 401);
+            return redirect('login')->with('message', 'No se ha logeado');
         }
     }
 
@@ -31,9 +54,10 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         try {
-            auth()->logout();
 
-            return response()->json(['message' => 'Logout exitoso'], 200);
+            Auth::logout();
+
+            redirect('login')->with('message', 'Se ha cerrado la sesión');
         } catch (Exception $e) {
 
             return response()->json(['error' => 'Error al hacer logout'], 500);

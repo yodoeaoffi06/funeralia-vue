@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-06-2023 a las 00:38:16
+-- Tiempo de generación: 09-06-2023 a las 02:07:33
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -23,7 +23,6 @@ SET time_zone = "+00:00";
 
 CREATE DATABASE funeralia;
 USE funeralia;
-
 -- --------------------------------------------------------
 
 --
@@ -34,10 +33,17 @@ CREATE TABLE `asignacion` (
   `id_asignacion` int(11) NOT NULL COMMENT 'Identificador de la asignacion',
   `id_trabajador` int(11) NOT NULL COMMENT 'Identificador del trabajador',
   `id_servicio` int(11) NOT NULL COMMENT 'Identificador del servicio',
-  `creates_at` datetime DEFAULT current_timestamp() COMMENT 'Fecha de creación de la asignación',
+  `created_at` datetime DEFAULT current_timestamp() COMMENT 'Fecha de creación de la asignación',
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL COMMENT 'Fecha de eliminación de la asignación'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `asignacion`
+--
+
+INSERT INTO `asignacion` (`id_asignacion`, `id_trabajador`, `id_servicio`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 2, 4, '2023-06-08 20:41:05', '2023-06-08 20:41:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -81,7 +87,8 @@ CREATE TABLE `gerente` (
 --
 
 INSERT INTO `gerente` (`id_gerente`, `id_usuario`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(5, 9, '2023-06-05 23:03:27', '2023-06-05 23:03:27', NULL);
+(5, 9, '2023-06-05 23:03:27', '2023-06-05 23:03:27', NULL),
+(6, 12, '2023-06-08 07:10:42', '2023-06-08 07:10:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -151,6 +158,13 @@ CREATE TABLE `secretaria` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL COMMENT 'Fecha de eliminación de la secretaría'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `secretaria`
+--
+
+INSERT INTO `secretaria` (`id_secretaria`, `id_usuario`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(4, 13, '2023-06-08 20:20:05', '2023-06-08 20:20:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -235,6 +249,13 @@ CREATE TABLE `trabajador` (
   `deleted_at` datetime DEFAULT NULL COMMENT 'Fecha de eliminación del trabajador'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `trabajador`
+--
+
+INSERT INTO `trabajador` (`id_trabajador`, `id_usuario`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(2, 14, '2023-06-08 20:36:22', '2023-06-08 20:36:22', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -263,7 +284,10 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `ap_pat`, `ap_mat`, `telefono`, `id_tipo`, `email`, `password`, `created_at`, `updated_at`, `deleted_at`, `remember_token`) VALUES
 (9, 'Yadhir', 'Teobal', 'Villacruz', '2299685317', 1, 'yadhirtv@gmail.com', '$2y$10$GyAMOZRm0Xz8V66XH3fgmO3rbmNXJvDRq2g1wmoKwC92EllFy6kIG', '2023-06-05 23:03:27', '2023-06-05 23:04:54', NULL, NULL),
 (10, 'a', 'b', 'c', '1234567890', 2, 'abc@gmail.com', '$2y$10$PT63NGJQTSwzQN6ap6cAa.vIKJmP19szWKeBDmORE5bCKX/MSXjti', '2023-06-05 23:08:06', '2023-06-05 23:08:06', NULL, NULL),
-(11, 'Yodo', 'De Jesus', 'Almeda', '2536555789', 2, 'yadhirTV2@gmail.com', '$2y$10$rDTugpf/ADnIRJBGbQBEMuyktbU2jMzeP6.xmhDkGkOSP3lQYCqsS', '2023-06-06 00:25:51', '2023-06-06 00:25:51', NULL, NULL);
+(11, 'Yodo', 'De Jesus', 'Almeda', '2536555789', 2, 'yadhirTV2@gmail.com', '$2y$10$rDTugpf/ADnIRJBGbQBEMuyktbU2jMzeP6.xmhDkGkOSP3lQYCqsS', '2023-06-06 00:25:51', '2023-06-06 00:25:51', NULL, NULL),
+(12, 'mi', 'nombre', 'es', '0123456789', 1, 'mud@gmail.com', '$2y$10$orEx.J9vZKwBQxcJVAm85.UcbV5zP/qGUOTnYrSsysPwKz4wYEBHu', '2023-06-08 07:10:42', '2023-06-08 07:10:42', NULL, NULL),
+(13, 'secretaria', 'prueba', '1', '2995666666', 2, 'secre@gmail.com', '$2y$10$mbo98A9aN0ZvGxhL9nnoZ.Jhu.YTx8HhuLGwiJ.Z9p0kUkW0.tpOi', '2023-06-08 20:20:05', '2023-06-08 20:20:05', NULL, NULL),
+(14, 'trabajador', 'prueba', '1', '9999999999', 3, 'trabajador@gmail.com', '$2y$10$pdM.0k2rPLlQ6nRu5f67fuWf/RheYLLYBrIODcNQMMHVK/GBd/IoW', '2023-06-08 20:36:22', '2023-06-08 20:36:22', NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -354,7 +378,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `asignacion`
 --
 ALTER TABLE `asignacion`
-  MODIFY `id_asignacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la asignacion';
+  MODIFY `id_asignacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la asignacion', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
@@ -366,7 +390,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `gerente`
 --
 ALTER TABLE `gerente`
-  MODIFY `id_gerente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del gerente', AUTO_INCREMENT=6;
+  MODIFY `id_gerente` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del gerente', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `mobiliario`
@@ -384,7 +408,7 @@ ALTER TABLE `mobiliario_total`
 -- AUTO_INCREMENT de la tabla `secretaria`
 --
 ALTER TABLE `secretaria`
-  MODIFY `id_secretaria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la secretaria', AUTO_INCREMENT=4;
+  MODIFY `id_secretaria` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador de la secretaria', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio`
@@ -408,13 +432,13 @@ ALTER TABLE `tipo_usuario`
 -- AUTO_INCREMENT de la tabla `trabajador`
 --
 ALTER TABLE `trabajador`
-  MODIFY `id_trabajador` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del trabajador', AUTO_INCREMENT=2;
+  MODIFY `id_trabajador` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del trabajador', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario', AUTO_INCREMENT=12;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador del usuario', AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas

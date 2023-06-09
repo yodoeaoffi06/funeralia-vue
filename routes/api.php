@@ -39,5 +39,12 @@ Route::prefix('f')->group(function () {
         Route::post('generate-mobilary', 'App\Http\Controllers\ServicesController@generateMobilary');
         Route::get('get-services', 'App\Http\Controllers\ServicesController@getServices');
         Route::get('service-info/{id_servicio}', 'App\Http\Controllers\ServicesController@getServiceInformation');
+        Route::get('get-mobilary/{id_tipo_servicio}', 'App\Http\Controllers\ServicesController@getMobilary');
+    })->middleware('auth:api');
+
+    Route::prefix('assignment')->group(function () {
+        Route::post('assign-service', 'App\Http\Controllers\ServicesAssignmentController@assignService');
+        Route::get('today-services', 'App\Http\Controllers\ServicesAssignmentController@getTodayServices');
+        
     })->middleware('auth:api');
 });

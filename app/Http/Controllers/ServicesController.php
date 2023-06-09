@@ -41,13 +41,10 @@ class ServicesController extends Controller
 
             if($cliente->save()) {
 
-                return response()->json([
-                    'message'   => 'Se ha creado el cliente',
-                    'data'      => $cliente->id_cliente
-                ], 200);
+                return redirect()->route('reg2', ['id_cliente' => $cliente->id_cliente])->with('message', 'Se ha creado el cliente');
             }
 
-            return response()->json(['message' => 'No se ha creado el cliente'], 400);
+            redirect('reg1')->with('message', 'No se ha creado el cliente');
         } catch(Exception $e) {
 
             return response()->json(['error' => $e], 400);
@@ -84,10 +81,10 @@ class ServicesController extends Controller
 
             if($servicio->save()) {
 
-                return response()->json([
-                    'message'   => 'Se ha creado el servicio',
-                    'data'      => $servicio->id_servicio
-                ], 200);
+                return redirect()->route('reg3', [
+                    'id_servicio' => $servicio->id_servicio,
+                    'id_tipo_servicio' => $servicio->id_tipo_servicio
+                ])->with('message', 'Se ha creado el servicio');
             }
 
             return response()->json(['message' => 'No se ha creado el servicio'], 400);
@@ -124,10 +121,7 @@ class ServicesController extends Controller
 
             if($mobiliario->save()) {
 
-                return response()->json([
-                    'message'   => 'Se ha generado mobiliario al servicio',
-                    'data'      => $mobiliario->id_mobiliario_total
-                ], 200);
+                return redirect('home')->with('message', 'Se ha logeado un gerente');
             }
 
             return response()->json(['message' => 'No se ha generado mobiliario al servicio'], 400);
@@ -223,5 +217,14 @@ class ServicesController extends Controller
         } catch(Exeption $e) {
 
         }
+    }
+
+    public function getMobilary($id_tipo_servicio) {
+
+        $mobiliario = mobiliario::select('id_mobiliario', 'nombre')
+            ->where('id_tipo_servicio', $id_tipo_servicio)
+            ->get();
+
+        return response()->json(['data' => $mobiliario], 200);
     }
 }
