@@ -35,10 +35,10 @@ class LoginController extends Controller
 
             switch($usuario->id_tipo) {
                 case 1:
-                    return redirect('principal')->with('message', 'Se ha logeado un gerente');
+                    return redirect('home')->with('message', 'Se ha logeado un gerente');
                     break;
                 case 2:
-                    return redirect('principal')->with('message', 'Se ha logeado una secretaria');
+                    return redirect('home')->with('message', 'Se ha logeado una secretaria');
                     break;
                 case 3:
                     return redirect('principal')->with('message', 'Se ha logeado un trabajador');
@@ -57,10 +57,7 @@ class LoginController extends Controller
 
             Auth::logout();
 
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            return response()->json(['message' => 'Logout exitoso'], 200);
+            redirect('login')->with('message', 'Se ha cerrado la sesión');
         } catch (Exception $e) {
 
             return response()->json(['error' => 'Error al hacer logout'], 500);
